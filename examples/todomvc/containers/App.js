@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import TodoApp from './TodoApp';
 import { createStore, combineReducers, compose } from 'redux';
-import { devTools, persistState } from 'redux-devtools';
-import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
+import { devTools } from '../../../src';
+import { persistState } from 'redux-devtools';
+import { LogMonitor, DevTools } from '../../../src/react';
+import { DebugPanel } from 'redux-devtools/lib/react';
 import { Provider } from 'react-redux';
 import * as reducers from '../reducers';
 

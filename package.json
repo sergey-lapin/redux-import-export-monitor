@@ -36,6 +36,7 @@
     "expect": "^1.6.0",
     "isparta": "^3.0.3",
     "mocha": "^2.2.5",
+    "redux-devtools": "^0.2.0",
     "rimraf": "^2.3.4"
   },
   "peerDependencies": {

@@ -1,5 +1,5 @@
 import React, { PropTypes, findDOMNode, Component } from 'react';
-import LogMonitorEntry from './LogMonitorEntry';
+import LogMonitorEntry from 'redux-devtools/lib/react/LogMonitorEntry';
 import ReactZeroClipboard from 'react-zeroclipboard';
 
 export default class LogMonitor extends Component {
