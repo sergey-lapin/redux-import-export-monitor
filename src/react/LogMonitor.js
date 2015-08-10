@@ -1,10 +1,17 @@
-import React, { PropTypes, findDOMNode } from 'react';
+import React, { PropTypes, findDOMNode, Component } from 'react';
 import LogMonitorEntry from './LogMonitorEntry';
 import ReactZeroClipboard from 'react-zeroclipboard';
 
-export default class LogMonitor {
-  constructor() {
+export default class LogMonitor extends Component {
+  constructor(props) {
+    super(props);
+
     window.addEventListener('keydown', ::this.handleKeyPress);
+
+    this.state = {
+      inputOpen: false,
+      importValue: ''
+    };
   }
 
   static propTypes = {
@@ -20,6 +27,7 @@ export default class LogMonitor {
     toggleAction: PropTypes.func.isRequired,
     jumpToState: PropTypes.func.isRequired,
     setMonitorState: PropTypes.func.isRequired,
+    recomputeStates: PropTypes.func.isRequired,
     select: PropTypes.func.isRequired
   };
 
@@ -93,6 +101,14 @@ export default class LogMonitor {
     }
   }
 
+  handleImport() {
+    let importValue = JSON.parse(this.state.importValue);
+    let { committedState, stagedActions } = importValue;
+
+    this.toggleInput();
+    this.props.recomputeStates(committedState, stagedActions);
+  }
+
   getStateAndActions() {
     return JSON.stringify({
       committedState: this.props.computedStates[0].state,
@@ -100,8 +116,28 @@ export default class LogMonitor {
     });
   }
 
-  toggleInputModal() {
-    // TODO
+  handleInputChange(event) {
+    this.setState({
+      importValue: event.target.value
+    });
+  }
+
+  toggleInput() {
+    this.setState({
+      inputOpen: !this.state.inputOpen
+    });
+  }
+
+  renderInput() {
+    return (
+      <div>
+        <input type='text' name='import' onChange={::this.handleInputChange} />
+        <a onClick={::this.handleImport}
+           style={{ textDecoration: 'underline', cursor: 'hand' }}>
+          <small>Save</small>
+        </a>
+      </div>
+    );
   }
 
   render() {
@@ -130,6 +166,8 @@ export default class LogMonitor {
 
     let serializedState = this.getStateAndActions();
 
+    let input = this.state.inputOpen ? this.renderInput() : <div></div>;
+
     return (
       <div style={{
         fontFamily: 'monospace',
@@ -153,12 +191,13 @@ export default class LogMonitor {
                 <small>Export</small>
               </ReactZeroClipboard>
             </a>
-            <a onClick={::this.toggleInputModal}
+            <a onClick={::this.toggleInput}
                style={{ textDecoration: 'underline', cursor: 'hand' }}>
               <small>Import</small>
             </a>
           </div>
         </div>
+        {input}
         {elements}
         <div>
           {computedStates.length > 1 &&
