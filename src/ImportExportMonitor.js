@@ -1,8 +1,10 @@
 import React, { PropTypes, Component } from 'react';
-import reducer from './reducers';
 import { ActionCreators } from 'redux-devtools';
+import parseKey from 'parse-key';
+
 const { importState } = ActionCreators;
 
+import reducer from './reducers';
 import InputModal from './InputModal';
 
 export default class ImportExportMonitor extends Component {
@@ -11,11 +13,8 @@ export default class ImportExportMonitor extends Component {
   constructor(props) {
     super(props);
 
-    window.addEventListener('keydown', ::this.handleKeyPress);
-
     this.state = {
-      inputOpen: false,
-      importValue: ''
+      inputOpen: false
     };
   }
 
@@ -32,19 +31,39 @@ export default class ImportExportMonitor extends Component {
     stagedActions: PropTypes.array,
     skippedActionIds: PropTypes.array,
     nextActionId: PropTypes.number,
-    select: PropTypes.func.isRequired
+    select: PropTypes.func.isRequired,
+    openModalKey: PropTypes.string
   };
 
   static defaultProps = {
-    select: (state) => state
+    select: (state) => state,
+    openModalKey: 'meta-shift-e'
   };
 
-  handleKeyPress(event) {
-    if (event.shiftKey && (event.metaKey || event.ctrlKey) && event.keyCode === 69) {
-      event.preventDefault();
-      this.setState({
-        inputOpen: true
-      });
+  componentDidMount() {
+    window.addEventListener('keydown', ::this.handleKeyPress);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', ::this.handleKeyPress);
+  }
+
+  matchesKey(key, event) {
+    const charCode = event.keyCode || event.which;
+    const char = String.fromCharCode(charCode);
+    return key.name.toUpperCase() === char.toUpperCase() &&
+      key.alt === event.altKey &&
+      key.ctrl === event.ctrlKey &&
+      key.meta === event.metaKey &&
+      key.shift === event.shiftKey;
+  }
+
+  handleKeyPress(e) {
+    const modalKey = parseKey(this.props.openModalKey);
+
+    if (this.matchesKey(modalKey, e)) {
+      e.preventDefault();
+      this.setState({ inputOpen: true });
     }
   }
 
@@ -72,29 +91,17 @@ export default class ImportExportMonitor extends Component {
     };
   }
 
-  handleInputChange(event) {
-    this.setState({
-      importValue: event.target.value
-    });
-  }
-
-  toggleInput() {
-    this.setState({
-      inputOpen: !this.state.inputOpen
-    });
-  }
-
   closeModal() {
     this.setState({ inputOpen: false });
   }
 
   render() {
-    const serializedState = JSON.stringify(this.getStateAndActions());
+    const appState = JSON.stringify(this.getStateAndActions());
 
     return (
       <InputModal
         isOpen={this.state.inputOpen}
-        appState={serializedState}
+        appState={appState}
         closeModal={::this.closeModal}
         onSubmit={::this.handleImport}
       />
