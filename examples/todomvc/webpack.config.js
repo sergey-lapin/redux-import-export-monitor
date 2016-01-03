@@ -19,6 +19,7 @@ module.exports = {
   ],
   resolve: {
     alias: {
+      'redux-import-export-monitor': path.join(__dirname, '..', '..', 'src/ImportExportMonitor'),
       'react': path.join(__dirname, 'node_modules', 'react')
     },
     extensions: ['', '.js']
