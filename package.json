@@ -1,6 +1,5 @@
 {
   "name": "redux-import-export-monitor",
-  "version": "0.2.0",
   "description": "Redux DevTools monitor for copying state/action log to clipboard as well as pasting it back in.",
   "main": "lib/index.js",
   "scripts": {
@@ -12,7 +11,8 @@
     "test:cov": "babel-node ./node_modules/.bin/isparta cover ./node_modules/.bin/_mocha -- --recursive",
     "prepublish": "npm run lint && npm run test && npm run clean && npm run build",
     "cz": "git add . && git cz",
-    "czp": "npm run cz && git push"
+    "czp": "npm run cz && git push",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
     "type": "git",
@@ -37,7 +37,8 @@
     "eslint-config-airbnb": "^2.1.1",
     "eslint-plugin-babel": "^3.0.0",
     "eslint-plugin-react": "3.9.0",
-    "rimraf": "^2.3.4"
+    "rimraf": "^2.3.4",
+    "semantic-release": "^4.3.5"
   },
   "peerDependencies": {
     "react": "^0.14.0",
