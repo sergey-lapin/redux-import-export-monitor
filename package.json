@@ -10,7 +10,9 @@
     "test": "NODE_ENV=test mocha --compilers js:babel/register --recursive",
     "test:watch": "NODE_ENV=test mocha --compilers js:babel/register --recursive --watch",
     "test:cov": "babel-node ./node_modules/.bin/isparta cover ./node_modules/.bin/_mocha -- --recursive",
-    "prepublish": "npm run lint && npm run test && npm run clean && npm run build"
+    "prepublish": "npm run lint && npm run test && npm run clean && npm run build",
+    "cz": "git add . && git cz",
+    "czp": "npm run cz && git push"
   },
   "repository": {
     "type": "git",
@@ -30,6 +32,7 @@
     "babel-core": "^5.8.34",
     "babel-eslint": "^4.1.6",
     "babel-loader": "^5.4.0",
+    "cz-customizable": "^2.6.0",
     "eslint": "^1.10.3",
     "eslint-config-airbnb": "^2.1.1",
     "eslint-plugin-babel": "^3.0.0",
@@ -44,5 +47,10 @@
   "dependencies": {
     "parse-key": "^0.2.1",
     "react-modal": "^0.6.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    }
   }
 }
