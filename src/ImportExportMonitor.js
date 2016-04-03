@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react';
+import shallowCompare from 'react-addons-shallow-compare';
 import { ActionCreators } from 'redux-devtools';
 import parseKey from 'parse-key';
 
@@ -45,6 +46,10 @@ export default class ImportExportMonitor extends Component {
     select: (state) => state,
     openModalKey: 'meta-shift-e'
   };
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
+  }
 
   componentDidMount() {
     window.addEventListener('keydown', ::this.handleKeyPress);

@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import shallowCompare from 'react-addons-shallow-compare';
 import Modal from 'react-modal';
 
 const style = {
@@ -41,6 +42,10 @@ export default class InputModal extends Component {
     this.onModalOpen = this.onModalOpen.bind(this);
     this.onRequestClose = this.onRequestClose.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
   }
 
   componentWillReceiveProps(nextProps) {
