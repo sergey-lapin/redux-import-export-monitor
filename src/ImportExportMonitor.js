@@ -86,7 +86,7 @@ export default class ImportExportMonitor extends Component {
       stagedActionIds: this.props.stagedActionIds,
       skippedActionIds: this.props.skippedActionIds,
       committedState: this.props.committedState,
-      computedStates: this.props.computedStates,
+      computedStates: [], // trigger instrument.recomputeStates()
       currentStateIndex: this.props.currentStateIndex
     };
   }
