@@ -1,6 +1,27 @@
 import React, { Component, PropTypes } from 'react';
 import Modal from 'react-modal';
 
+const style = {
+  overlay: {
+    zIndex: 100
+  },
+  content: {
+    overflow: 'hidden',
+    left: '25%',
+    height: 10,
+    width: '50%',
+    display: 'flex',
+    alignItems: 'center'
+  }
+};
+
+const formStyle = {
+  flex: 1,
+  display: 'flex',
+  justifyContent: 'space-around',
+  alignItems: 'center'
+};
+
 export default class InputModal extends Component {
   static propTypes = {
     closeModal: PropTypes.func.isRequired,
@@ -15,6 +36,11 @@ export default class InputModal extends Component {
     this.state = {
       appState: props.appState
     };
+
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onModalOpen = this.onModalOpen.bind(this);
+    this.onRequestClose = this.onRequestClose.bind(this);
+    this.onKeyDown = this.onKeyDown.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -31,53 +57,37 @@ export default class InputModal extends Component {
     });
   }
 
-  onInputChange = (e) => {
-    this.setState({
-      appState: e.target.value
-    });
+  onInputChange(e) {
+    this.setState({ appState: e.target.value });
   }
 
-  onModalOpen = () => {
+  onModalOpen() {
     this.modalInput.setSelectionRange(0, this.modalInput.value.length);
   }
 
-  onRequestClose = () => {
+  onRequestClose() {
     this.props.onSubmit(this.state.appState);
     this.props.closeModal();
   }
 
+  onKeyDown(e) {
+    if (e.keyCode === 13) {
+      this.onRequestClose();
+    }
+  }
+
   render() {
-    const style = {
-      overlay: {
-        zIndex: 100
-      },
-      content: {
-        overflow: 'hidden',
-        left: '25%',
-        height: 10,
-        width: '50%',
-        display: 'flex',
-        alignItems: 'center'
-      }
-    };
-
-    const formStyle = {
-      flex: 1,
-      display: 'flex',
-      justifyContent: 'space-around',
-      alignItems: 'center'
-    };
-
     return (
-      <Modal style={style} isOpen={this.props.isOpen} onRequestClose={::this.onRequestClose}>
-        <form style={formStyle} onSubmit={this.onRequestClose}>
+      <Modal style={style} isOpen={this.props.isOpen} onRequestClose={this.onRequestClose}>
+        <div style={formStyle}>
           <input ref={(ref) => this.modalInput = ref}
             style={{ flex: 10 }}
             onChange={this.onInputChange}
             value={this.state.appState}
+            onKeyDown={this.onKeyDown}
           />
-        <button style={{ flex: 1 }} onClick={this.props.closeModal}>Cancel</button>
-        </form>
+          <button style={{ flex: 1 }} onClick={this.props.closeModal}>Cancel</button>
+        </div>
       </Modal>
     );
   }

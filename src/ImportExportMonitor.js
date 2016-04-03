@@ -16,6 +16,12 @@ export default class ImportExportMonitor extends Component {
     this.state = {
       inputOpen: false
     };
+
+    this.matchesKey = this.matchesKey.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.handleImport = this.handleImport.bind(this);
+    this.getStateAndActions = this.getStateAndActions.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   static propTypes = {
@@ -68,9 +74,8 @@ export default class ImportExportMonitor extends Component {
   }
 
   handleImport(newState) {
-    let appState;
     try {
-      appState = JSON.parse(newState);
+      const appState = JSON.parse(newState);
       this.props.dispatch(importState(appState));
     } catch (e) {
       console.warn('Invalid app state JSON passed into the input prompt: ', e);
@@ -102,8 +107,8 @@ export default class ImportExportMonitor extends Component {
       <InputModal
         isOpen={this.state.inputOpen}
         appState={appState}
-        closeModal={::this.closeModal}
-        onSubmit={::this.handleImport}
+        closeModal={this.closeModal}
+        onSubmit={this.handleImport}
       />
     );
   }
