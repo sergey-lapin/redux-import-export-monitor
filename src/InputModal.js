@@ -24,11 +24,16 @@ const formStyle = {
 };
 
 export default class InputModal extends Component {
+  static defaultProps = {
+    contentLabel: 'Modal'
+  };
+
   static propTypes = {
     closeModal: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
     isOpen: PropTypes.bool,
-    appState: PropTypes.string
+    appState: PropTypes.string,
+    contentLabel: PropTypes.string
   };
 
   constructor(props) {
@@ -83,7 +88,7 @@ export default class InputModal extends Component {
 
   render() {
     return (
-      <Modal style={style} isOpen={this.props.isOpen} onRequestClose={this.onRequestClose}>
+      <Modal style={style} isOpen={this.props.isOpen} onRequestClose={this.onRequestClose} contentLabel={this.props.contentLabel}>
         <div style={formStyle}>
           <input ref={(ref) => this.modalInput = ref}
             style={{ flex: 10 }}
