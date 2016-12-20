@@ -1,5 +1,6 @@
 {
   "name": "redux-import-export-monitor",
+  "version": "1.0.0",
   "description": "Redux DevTools monitor for copying state/action log to clipboard as well as pasting it back in.",
   "main": "lib/index.js",
   "scripts": {
@@ -19,7 +20,7 @@
       "minor": ["feat"],
       "patch": ["fix", "perf"]
     }
-  }, 
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/lapanoid/redux-import-export-monitor.git"
