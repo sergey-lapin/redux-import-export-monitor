@@ -22,7 +22,7 @@ Include the monitor while setting up the DevTools:
 ```js
 import React from 'react';
 import { createDevTools } from 'redux-devtools';
-import { ImportExportMonitor } from 'redux-import-export-monitor';
+import ImportExportMonitor from 'redux-import-export-monitor';
 
 export default createDevTools(<ImportExportMonitor />);
 ```
