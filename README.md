@@ -5,7 +5,9 @@
 Redux Import Export Monitor
 ==============================
 
-A simple monitor for [Redux DevTools](https://github.com/gaearon/redux-devtools) that enables exporting, then importing the serialized state of a Redux application. It looks like a ```prompt()``` modal, but without the character limit (from what I've tested).
+A simple monitor for [Redux DevTools](https://github.com/gaearon/redux-devtools) that enables exporting, then importing the serialized state of a Redux application. It looks like a ```prompt()``` modal, but without as small of a character limit.
+
+#### Warning: This tool has limited use with extremely large app states.
 
 ### Installation
 
