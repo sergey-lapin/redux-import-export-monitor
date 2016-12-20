@@ -1,1 +1,2 @@
-export { default as ImportExportMonitor } from './ImportExportMonitor';
+import ImportExportMonitor from './ImportExportMonitor';
+export default ImportExportMonitor;
