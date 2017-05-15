@@ -55,6 +55,7 @@
   },
   "dependencies": {
     "parse-key": "^0.2.1",
+    "prop-types": "^15.5.10",
     "react-addons-shallow-compare": "^0.14.0 || ^15.0.0",
     "react-modal": "^1.1.2"
   },
